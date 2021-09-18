@@ -1,7 +1,7 @@
 const FamilyFeudPoll = artifacts.require('FamilyFeudPoll')
 
 contract('FamilyFeudPoll', function (accounts) {
-  const [owner, person1, person2, person3 ] = accounts
+  const [owner, person1, person2, person3] = accounts
 
   let familyFeudPoll
 
@@ -11,6 +11,16 @@ contract('FamilyFeudPoll', function (accounts) {
 
   it('should assert true', async function () {
     return assert.isTrue(true)
+  })
+
+  it('starts questionStrings with an empty string', async ()=> {
+
+    // see https://ethereum.stackexchange.com/questions/70576/how-could-i-get-public-array-from-javascript/70577
+
+    const firstElement = await familyFeudPoll.questionStrings.call(0);
+    
+    expect(firstElement).to.equal('');
+
   })
 
   context('submitting a question', () => {
@@ -25,7 +35,7 @@ contract('FamilyFeudPoll', function (accounts) {
 
       const expectedQuestionStrings = ['', mockQuestion]
 
-      const expectedQuestionIds = [web3.utils.toBN(0), web3.utils.toBN(1)];
+      const expectedQuestionIds = [web3.utils.toBN(0), web3.utils.toBN(1)]
 
       expect(actualQuestionStrings).to.deep.equal(expectedQuestionStrings)
 
@@ -36,22 +46,26 @@ contract('FamilyFeudPoll', function (accounts) {
   })
 
   context('submitting an answer', () => {
-    
     it('2 people can submit same answer, and a third person submits a different answer', async () => {
-      
       const mockAnswer1 = 'this is answer 1'
       const mockAnswer2 = 'this is answer 2'
 
       const mockQuestionId = 1
 
-      await familyFeudPoll.submitAnswer(mockQuestionId, mockAnswer1, { from: person1 });
+      await familyFeudPoll.submitAnswer(mockQuestionId, mockAnswer1, {
+        from: person1,
+      })
 
-      await familyFeudPoll.submitAnswer(mockQuestionId, mockAnswer1, { from: person2 });
+      await familyFeudPoll.submitAnswer(mockQuestionId, mockAnswer1, {
+        from: person2,
+      })
 
-      await familyFeudPoll.submitAnswer(mockQuestionId, mockAnswer2, { from: person3 });
+      await familyFeudPoll.submitAnswer(mockQuestionId, mockAnswer2, {
+        from: person3,
+      })
 
       const actualQuestionStats = await familyFeudPoll.getQuestionStats(
-        mockQuestionId
+        mockQuestionId,
       )
 
       const expectedQuestionStats = {
@@ -59,9 +73,7 @@ contract('FamilyFeudPoll', function (accounts) {
         '1': [web3.utils.toBN(0), web3.utils.toBN(2), web3.utils.toBN(1)],
       }
 
-      expect(actualQuestionStats).to.deep.equal(expectedQuestionStats);
-      
-    });
-
+      expect(actualQuestionStats).to.deep.equal(expectedQuestionStats)
+    })
   })
 })
