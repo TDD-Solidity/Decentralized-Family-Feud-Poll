@@ -1,0 +1,26 @@
+{
+  "name": "decentralized-family-feud-poll",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:watch": "nodemon --ext 'js,sol' --exec 'truffle test --compile-all'",
+    "test:cc": "truffle run coverage",
+    "size": "truffle run contract-size"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TDD-Solidity/Decentralized-Family-Feud-Poll.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TDD-Solidity/Decentralized-Family-Feud-Poll/issues"
+  },
+  "homepage": "https://github.com/TDD-Solidity/Decentralized-Family-Feud-Poll#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.12",
+    "solidity-coverage": "^0.7.17",
+    "truffle-contract-size": "^2.0.1"
+  }
+}
