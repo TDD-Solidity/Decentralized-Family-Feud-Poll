@@ -13,14 +13,23 @@ contract('FamilyFeudPoll', function (accounts) {
     return assert.isTrue(true)
   })
 
-  it('starts questionStrings with an empty string', async ()=> {
-
+  it('starts questionStrings with an empty string', async () => {
     // see https://ethereum.stackexchange.com/questions/70576/how-could-i-get-public-array-from-javascript/70577
 
-    const firstElement = await familyFeudPoll.questionStrings.call(0);
-    
-    expect(firstElement).to.equal('');
+    const firstElement = await familyFeudPoll.questionStrings.call(0)
 
+    expect(firstElement).to.equal('')
+
+    // note that arrays (above) can only access one value.
+    // Also note that call public fields can be retrieved EITHER by calling the "as a function" or with ".call"...
+
+    const hardcodedString = await familyFeudPoll.hardcodedString()
+
+    const hardcodedNum = await familyFeudPoll.hardcodedNum.call()
+
+    expect(hardcodedString).to.equal('hardcodedString')
+
+    expect(hardcodedNum).to.deep.equal(web3.utils.toBN(42))
   })
 
   context('submitting a question', () => {

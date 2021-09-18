@@ -18,6 +18,10 @@ contract FamilyFeudPoll {
 
     mapping(uint256 => uint256) nextAnswerIndex;
 
+    string public hardcodedString = 'hardcodedString';
+
+    uint public hardcodedNum = 42;
+
     function submitQuestion(string calldata question) external {
         questionStrings.push(question);
         questionIds.push(nextQuestionIndex);
